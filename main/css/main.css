@@ -1,0 +1,118 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 30.09.2015, 21:17:20
+    Author     : Achim
+*/
+
+html{
+    background-image: url(../resource/images/header/2.jpg);
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100%;
+}
+
+body {
+    background-color: #222638;
+    font-family:  Verdana, Arial;
+    font-size: 100%;
+    font-weight: bold;
+    line-height: 1.5;
+    color: #FFF;
+    width: 80%;
+    max-width: 1280px;
+    min-height: 95%;
+    margin: auto;
+    border-radius: 20px;
+}
+
+header{
+    border-radius: 20px 20px 0px 0px;
+    height: 150px;
+    width: 100%;
+    background-image:  url(../resource/images/header/header10.png) ;
+    background-size:  cover;
+    background-repeat: no-repeat;
+}
+
+header h1{
+    color: black;
+    position: relative;
+    left: 200px;
+    top: 30px;
+}
+
+/*
+* Main menu
+*/
+
+nav.mainMenu ul {
+    list-style: none;
+    margin: 10px 10px;
+    padding: 0 20px;
+    overflow: hidden;
+    background: #efefef; 
+
+    background: linear-gradient(top,  darkcyan 10%, darkslategray 40%);
+    background: -moz-linear-gradient(top, darkcyan 10%, darkslategray 80%); 
+    background: -webkit-linear-gradient(top, darkcyan 0%, darkslategray 40%);
+    
+    box-shadow: 0px 0px 9px rgba(0,0,0,0.15);
+    border-radius: 10px;
+}
+
+nav.mainMenu li{
+    float: left;
+}
+
+nav.mainMenu a:link, a:visited{
+    display: block;
+    min-width: 100px;
+    font-weight: bold;
+    color: whitesmoke;
+    text-align: center;
+    padding: 4px 15px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+nav.mainMenu a.current, a:hover, a:active {
+    background: -moz-linear-gradient(top, silver 10%, gray 80%); 
+    background: -webkit-linear-gradient(top, silver 10%, gray 80%);
+    background: linear-gradient(top, silver 10%, gray 80%);
+    
+    color: whitesmoke;
+    border-radius: 0px 10px 0px 10px;
+}
+
+/**
+* Sub Menu
+*/
+
+nav.subMenu{
+    background-color: antiquewhite;
+   margin-right: 20px;
+   margin-top: 20px;
+    padding: 20px;
+    max-width: 300px;
+    float: right;
+}
+
+nav.subMenu ul{
+    list-style: none;
+}
+
+nav.subMenu a{
+    color: cornflowerblue;
+}
+
+
+section{
+    padding-left: 30px;
+}
+

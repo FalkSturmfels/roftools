@@ -1,0 +1,72 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 27.10.2015, 19:32:08
+    Author     : Achim
+*/
+
+//Temporär Abenteuerseiten
+
+section.start{
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 30px;
+}
+
+section.page{
+    padding: 30px;
+}
+
+p.storyend{
+    font-variant: small-caps;
+    text-align: center;
+}
+
+p a{
+    text-decoration: none;
+}
+
+/* unvisited link */
+p a:link {
+    color: #FFFFFF;
+}
+
+/* visited link */
+p a:visited {
+    color: steelblue;
+}
+
+/* mouse over link */
+p a:hover {
+    color: darkgoldenrod;
+}
+
+/* selected link */
+p a:active {
+    color: steelblue;
+}
+
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table, th, td {
+    border: 1px solid whitesmoke;
+    height: 40px;
+    text-align: left;
+    vertical-align: middle;
+    padding-left: 15px;
+}
+
+th{
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background-color: darkmagenta;
+}
