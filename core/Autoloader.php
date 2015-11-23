@@ -11,17 +11,24 @@ final class Autoloader
 
     private static $baseDir;
 
+    private static $rootDir;
+
     private static $corePaths = array(
         "db",
         "db/command",
+        "db/config",
         "db/connect",
         "db/interfaces",
         "templateengine"
     );
 
-    public static function register()
+    public static function register($rootDir = null)
     {
-        spl_autoload_register(array("Autoloader", "load"));
+        if ($rootDir !== null && is_string($rootDir)) {
+            spl_autoload_register(array("Autoloader", "autoload"));
+        } else {
+            spl_autoload_register(array("Autoloader", "load"));
+        }
     }
 
 
@@ -37,11 +44,32 @@ final class Autoloader
         }
 
         foreach (self::$corePaths as $corePath) {
-            $filePath = self::$baseDir . DIRECTORY_SEPARATOR . $corePath . DIRECTORY_SEPARATOR . $className . '.php';
-            if (file_exists($filePath)) {
-                require_once($filePath);
-                return;
+            $filePath = self::$baseDir . DIRECTORY_SEPARATOR . $corePath;
+            self::checkPath($filePath, $className);
+        }
+    }
+
+    public static function autoload($className)
+    {
+        if (is_dir(self::$rootDir)) {
+
+            if(!self::checkPath(self::$rootDir)){
+
             }
+
+        } else {
+            die();
+        }
+    }
+
+    private static function checkPath($path, $className)
+    {
+        $filePath = $path . DIRECTORY_SEPARATOR . $className . '.php';
+        if (file_exists($filePath)) {
+            require_once($filePath);
+            return true;
+        } else {
+            return false;
         }
     }
 
