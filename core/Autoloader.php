@@ -45,7 +45,9 @@ final class Autoloader
 
         foreach (self::$corePaths as $corePath) {
             $filePath = self::$baseDir . DIRECTORY_SEPARATOR . $corePath;
-            self::checkPath($filePath, $className);
+            if (self::checkPath($filePath, $className)) {
+                break;
+            }
         }
     }
 
@@ -53,8 +55,8 @@ final class Autoloader
     {
         if (is_dir(self::$rootDir)) {
 
-            if(!self::checkPath(self::$rootDir)){
-
+            if (!self::checkPath(self::$rootDir, $className)) {
+                self::checkSubDirectories(self::$rootDir);
             }
 
         } else {
@@ -62,6 +64,14 @@ final class Autoloader
         }
     }
 
+    /**
+     * Checks if the given class exists in the path.
+     * If it's exists, calls the according require_once function.
+     *
+     * @param $path Path which should be checked.
+     * @param $className Name of the needed class.
+     * @return bool True the class was found
+     */
     private static function checkPath($path, $className)
     {
         $filePath = $path . DIRECTORY_SEPARATOR . $className . '.php';
@@ -70,6 +80,31 @@ final class Autoloader
             return true;
         } else {
             return false;
+        }
+    }
+
+    /**
+     * Search in the sub directories of a directory for the needed class.
+     * If the class was found it returns true otherwise it search recursivly
+     * the next sub directories.
+     * @param $directory Directory in which the sub directories are.
+     * @param $className Name of the needed class.
+     * @return bool True if the class was found.
+     */
+    private static function checkSubDirectories($directory, $className)
+    {
+        if ($handle = opendir($directory)) {
+            while (($file = readdir($handle)) !== false) {
+                if (is_dir($file)) {
+                    if (self::checkPath($file, $className)) {
+                        return true;
+                    } else {
+                        if(self::checkSubDirectories($file, $className)){
+                            return true;
+                        }
+                    }
+                }
+            }
         }
     }
 
