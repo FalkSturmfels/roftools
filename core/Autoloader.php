@@ -13,48 +13,15 @@ final class Autoloader
 
     private static $rootDir;
 
-    private static $corePaths = array(
-        "db",
-        "db/command",
-        "db/config",
-        "db/connect",
-        "db/interfaces",
-        "templateengine"
-    );
 
-    public static function register($rootDir = null)
+    public static function register($rootDir)
     {
         if ($rootDir !== null && is_string($rootDir))
         {
             self::$rootDir = $rootDir;
             spl_autoload_register(array("Autoloader", "autoload"));
-        }
-        else
-        {
-            spl_autoload_register(array("Autoloader", "load"));
-        }
-    }
-
-
-    public static function addClassPaths(array $classPaths)
-    {
-        array_merge(self::$corePaths, $classPaths);
-    }
-
-    public static function load($className)
-    {
-        if (self::$baseDir === null)
-        {
-            self::$baseDir = dirname(__FILE__);
-        }
-
-        foreach (self::$corePaths as $corePath)
-        {
-            $filePath = self::$baseDir . DIRECTORY_SEPARATOR . $corePath;
-            if (self::checkPath($filePath, $className))
-            {
-                break;
-            }
+        }else{
+            die();
         }
     }
 
@@ -62,12 +29,10 @@ final class Autoloader
     {
         if (is_dir(self::$rootDir))
         {
-
             if (!self::checkPath(self::$rootDir, $className))
             {
                 self::checkSubDirectories(self::$rootDir, $className);
             }
-
         }
         else
         {
