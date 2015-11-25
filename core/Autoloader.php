@@ -24,10 +24,13 @@ final class Autoloader
 
     public static function register($rootDir = null)
     {
-        if ($rootDir !== null && is_string($rootDir)) {
+        if ($rootDir !== null && is_string($rootDir))
+        {
             self::$rootDir = $rootDir;
             spl_autoload_register(array("Autoloader", "autoload"));
-        } else {
+        }
+        else
+        {
             spl_autoload_register(array("Autoloader", "load"));
         }
     }
@@ -40,13 +43,16 @@ final class Autoloader
 
     public static function load($className)
     {
-        if (self::$baseDir === null) {
+        if (self::$baseDir === null)
+        {
             self::$baseDir = dirname(__FILE__);
         }
 
-        foreach (self::$corePaths as $corePath) {
+        foreach (self::$corePaths as $corePath)
+        {
             $filePath = self::$baseDir . DIRECTORY_SEPARATOR . $corePath;
-            if (self::checkPath($filePath, $className)) {
+            if (self::checkPath($filePath, $className))
+            {
                 break;
             }
         }
@@ -54,13 +60,17 @@ final class Autoloader
 
     public static function autoload($className)
     {
-        if (is_dir(self::$rootDir)) {
+        if (is_dir(self::$rootDir))
+        {
 
-            if (!self::checkPath(self::$rootDir, $className)) {
+            if (!self::checkPath(self::$rootDir, $className))
+            {
                 self::checkSubDirectories(self::$rootDir, $className);
             }
 
-        } else {
+        }
+        else
+        {
             die();
         }
     }
@@ -76,10 +86,13 @@ final class Autoloader
     private static function checkPath($path, $className)
     {
         $filePath = $path . DIRECTORY_SEPARATOR . $className . '.php';
-        if (file_exists($filePath)) {
+        if (file_exists($filePath))
+        {
             require_once($filePath);
             return true;
-        } else {
+        }
+        else
+        {
             return false;
         }
     }
@@ -94,19 +107,39 @@ final class Autoloader
      */
     private static function checkSubDirectories($directory, $className)
     {
-        if ($directory !== "." && $directory !== ".." && $handle = opendir($directory)) {
-            while (($file = readdir($handle))) {
-                if (is_dir($file)) {
-                    if (self::checkPath($file, $className)) {
+        if ($handle = opendir($directory))
+        {
+            while (($file = readdir($handle)))
+            {
+                if (self::isSubDirectory($directory, $file))
+                {
+                    $newDir = $directory . DIRECTORY_SEPARATOR . $file;
+
+                    if (self::checkPath($newDir, $className))
+                    {
                         return true;
-                    } else {
-                        if(self::checkSubDirectories($file, $className)){
-                            return true;
-                        }
+                    }
+                    else if (self::checkSubDirectories($newDir, $className))
+                    {
+                        return true;
                     }
                 }
             }
         }
+    }
+
+    private static function isSubDirectory($directory, $file)
+    {
+        if (substr($file, 0, 1) !== ".")
+        {
+            $newDir = $directory . DIRECTORY_SEPARATOR . $file;
+
+            if (is_dir($newDir))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
 
@@ -114,11 +147,13 @@ final class Autoloader
      * Singleton: private __construct
      *            private __clone
      */
-    private function __construct()
+    private
+    function __construct()
     {
     }
 
-    private function __clone()
+    private
+    function __clone()
     {
     }
 }
