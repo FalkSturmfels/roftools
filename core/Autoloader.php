@@ -25,6 +25,7 @@ final class Autoloader
     public static function register($rootDir = null)
     {
         if ($rootDir !== null && is_string($rootDir)) {
+            self::$rootDir = $rootDir;
             spl_autoload_register(array("Autoloader", "autoload"));
         } else {
             spl_autoload_register(array("Autoloader", "load"));
@@ -56,7 +57,7 @@ final class Autoloader
         if (is_dir(self::$rootDir)) {
 
             if (!self::checkPath(self::$rootDir, $className)) {
-                self::checkSubDirectories(self::$rootDir);
+                self::checkSubDirectories(self::$rootDir, $className);
             }
 
         } else {
@@ -93,8 +94,8 @@ final class Autoloader
      */
     private static function checkSubDirectories($directory, $className)
     {
-        if ($handle = opendir($directory)) {
-            while (($file = readdir($handle)) !== false) {
+        if ($directory !== "." && $directory !== ".." && $handle = opendir($directory)) {
+            while (($file = readdir($handle))) {
                 if (is_dir($file)) {
                     if (self::checkPath($file, $className)) {
                         return true;

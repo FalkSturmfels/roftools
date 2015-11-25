@@ -28,7 +28,8 @@ $command = new getcommand();
 $command->creategetquery($entityname, ["name"]);
 echo $command->getquery();*/
 
-Autoloader::register();
+$baseDir = dirname(__FILE__);
+Autoloader::register($baseDir);
 
 $connector = new DbConnector();
 //$executor = new DBCommandExecutor($connector);
