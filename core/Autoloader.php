@@ -8,9 +8,6 @@
  */
 final class Autoloader
 {
-
-    private static $baseDir;
-
     private static $rootDir;
 
 

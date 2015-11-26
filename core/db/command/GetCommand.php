@@ -21,14 +21,16 @@ class GetCommand implements IDbCommand
      */
     public function createGetQuery($entityName, array $columns = [], $propertyName = "", array $propertyValues = [])
     {
-        if (is_string($entityName)) {
+        if (is_string($entityName))
+        {
 
             $selectPart = $this->createSelectPart($columns);
             $tableName = $this->createTableName($entityName);
             $wherePart = $this->createWherePart($propertyName, $propertyValues);
 
             $this->query = $selectPart . $tableName . $wherePart;
-        } else {
+        } else
+        {
             throw new InvalidArgumentException("EntityName must be a String");
         }
     }
@@ -37,11 +39,14 @@ class GetCommand implements IDbCommand
     {
         $selectPart = "SELECT * ";
 
-        if (!empty($columns)) {
+        if (!empty($columns))
+        {
             $selectPart = "SELECT ";
 
-            foreach ($columns as $column) {
-                if (is_string($column)) {
+            foreach ($columns as $column)
+            {
+                if (is_string($column))
+                {
                     $selectPart .= $column . ", ";
                 }
             }
@@ -62,16 +67,20 @@ class GetCommand implements IDbCommand
     {
         $wherePart = "";
 
-        if (!empty($propertyName) && !empty($propertyValues)) {
-            if (is_string($propertyName)) {
+        if (!empty($propertyName) && !empty($propertyValues))
+        {
+            if (is_string($propertyName))
+            {
 
                 $wherePart .= " WHERE ";
 
-                foreach ($propertyValues as $propertyValue) {
+                foreach ($propertyValues as $propertyValue)
+                {
                     $wherePart .= $propertyName . "= '" . $propertyValue . "' OR ";
                 }
                 $wherePart = substr($wherePart, 0, strlen($wherePart) - 4);
-            } else {
+            } else
+            {
                 throw new InvalidArgumentException("PropertyName must be a String");
             }
         }

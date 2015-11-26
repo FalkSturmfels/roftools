@@ -8,11 +8,39 @@
  */
 class DbConfig
 {
-    const host = "localhost";
+    public static $host;
 
-    const dbName = "rof";
+    public static $dbName;
 
-    const user = "root";
+    public static $user;
 
-    const pw = "zxmzt66";
+    public static $pw;
+
+    /**
+     * @param $fileName
+     */
+    public static function setConfigFile($fileName)
+    {
+        if ($dbConfig = parse_ini_file($fileName))
+        {
+            self::$host = $dbConfig["host"];
+            self::$dbName = $dbConfig["dbName"];
+            self::$user = $dbConfig["user"];
+            self::$pw = $dbConfig["pw"];
+        }
+    }
+
+    /**
+     * Singleton: private __construct
+     *            private __clone
+     */
+    private
+    function __construct()
+    {
+    }
+
+    private
+    function __clone()
+    {
+    }
 }

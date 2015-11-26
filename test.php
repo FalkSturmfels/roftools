@@ -12,6 +12,9 @@ require_once "core/Autoloader.php";
 $baseDir = dirname(__FILE__);
 Autoloader::register($baseDir);
 
+$configPath = $baseDir.DIRECTORY_SEPARATOR."main".DIRECTORY_SEPARATOR."config".DIRECTORY_SEPARATOR;
+DbConfig::setConfigFile($configPath."config_db.ini");
+
 $connector = new DbConnector();
 $executor = new DBCommandExecutor($connector);
 $service = new GenericFindService($executor);

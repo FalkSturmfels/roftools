@@ -25,10 +25,10 @@ class DbConnector
      */
     public function __construct()
     {
-        $this->host = DbConfig::host;
-        $this->dbname = DbConfig::dbName;
-        $this->pw = DbConfig::pw;
-        $this->user = DbConfig::user;
+        $this->host = DbConfig::$host;
+        $this->dbname = DbConfig::$dbName;
+        $this->pw = DbConfig::$pw;
+        $this->user = DbConfig::$user;
 
         try {
             $dsn = "mysql:host=" . $this->host . ";"
