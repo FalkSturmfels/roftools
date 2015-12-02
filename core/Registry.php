@@ -10,7 +10,7 @@ class Registry
 {
     private $classMap = array();
 
-    private $parameterMap = array();
+    private $constructorArgsMap = array();
 
     private $singletonList = array();
 
@@ -24,7 +24,7 @@ class Registry
 
             if (!empty($paramNames))
             {
-                $this->parameterMap[$interfaceName] = $paramNames;
+                $this->constructorArgsMap[$interfaceName] = $paramNames;
             }
 
             if ($isSingleton)
@@ -50,9 +50,9 @@ class Registry
     {
         if (array_key_exists($interfaceName, $this->classMap))
         {
-            $isSingleton = in_array($interfaceName, $this->singletonList);
-            $instance = $this->createCoreInstance($interfaceName);
+            $instance = $this->createNewInstance($interfaceName);
 
+            $isSingleton = in_array($interfaceName, $this->singletonList);
             if ($isSingleton)
             {
                 $this->instanceMap[$interfaceName] = $instance;
@@ -62,12 +62,12 @@ class Registry
         return null;
     }
 
-    private function createCoreInstance($interfaceName)
+    private function createNewInstance($interfaceName)
     {
-        $className = $this->getCoreClass($interfaceName);
+        $className = $this->getClassName($interfaceName);
         if ($className !== null)
         {
-            $paramNames = $this->getCoreParams($interfaceName);
+            $paramNames = $this->getConstructorArgs($interfaceName);
 
             if ($paramNames !== null)
             {
@@ -90,7 +90,7 @@ class Registry
         return null;
     }
 
-    private function getCoreClass($interfaceName)
+    private function getClassName($interfaceName)
     {
         if (array_key_exists($interfaceName, $this->classMap))
         {
@@ -99,11 +99,11 @@ class Registry
         return null;
     }
 
-    private function getCoreParams($interfaceName)
+    private function getConstructorArgs($interfaceName)
     {
-        if (array_key_exists($interfaceName, $this->parameterMap))
+        if (array_key_exists($interfaceName, $this->constructorArgsMap))
         {
-            return $this->parameterMap[$interfaceName];
+            return $this->constructorArgsMap[$interfaceName];
         }
         return null;
     }
