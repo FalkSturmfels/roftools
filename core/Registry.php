@@ -8,21 +8,11 @@
  */
 class Registry
 {
+    private $classMap = array();
 
-    private $classMap = array(
-        "IDbConnector" => "DbConnector",
-        "IDbCommandExecutor" => "DbCommandExecutor",
-        "IGetCommand" => "GetCommand"
-    );
+    private $parameterMap = array();
 
-    private $parameterMap = array(
-        "IDbCommandExecutor" => array("IDbConnector")
-    );
-
-    private $singletonList = array(
-        "IDbConnector",
-        "IDbCommandExecutor",
-    );
+    private $singletonList = array();
 
     private $instanceMap = array();
 
@@ -116,5 +106,35 @@ class Registry
             return $this->parameterMap[$interfaceName];
         }
         return null;
+    }
+
+    // ============================================
+    //
+    //   Singleton
+    //
+    // ============================================
+
+    static private $registry = null;
+
+    static public function getRegistryInstance()
+    {
+        if (null === self::$registry)
+        {
+            self::$registry = new self;
+        }
+
+        return self::$registry;
+    }
+
+    /**
+     * Singleton: private __construct
+     *            private __clone
+     */
+    private function __construct()
+    {
+    }
+
+    private function __clone()
+    {
     }
 }

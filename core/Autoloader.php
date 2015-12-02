@@ -88,6 +88,7 @@ final class Autoloader
                 }
             }
         }
+        return false;
     }
 
     private static function isSubDirectory($directory, $file)
@@ -102,20 +103,5 @@ final class Autoloader
             }
         }
         return false;
-    }
-
-
-    /**
-     * Singleton: private __construct
-     *            private __clone
-     */
-    private
-    function __construct()
-    {
-    }
-
-    private
-    function __clone()
-    {
     }
 }
