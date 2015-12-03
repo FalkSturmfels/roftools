@@ -21,22 +21,28 @@ class Bootstrap
         DbConfig::setConfigFile($configPath . "config_db.ini");
     }
 
-    private static function mapCoreInstances(){
+    private static function mapCoreInstances()
+    {
+        $context = new MappingContext();
+
+        $context->mapInstance("IDbConnector", "DbConnector", null, true);
+        $context->mapInstance("IDbCommandExecutor", "DbCommandExecutor", array("IDbConnector"), true);
+        $context->mapInstance("IGetCommand", "GetCommand", null, false);
 
         $registry = Registry::getRegistryInstance();
-
-        $registry->mapInstance("IDbConnector", "DbConnector", null, true);
-        $registry->mapInstance("IDbCommandExecutor", "DbCommandExecutor", array("IDbConnector"), true);
-        $registry->mapInstance("IGetCommand", "GetCommand", null, false);
+        $registry->addMappingContext($context);
     }
 
     private static function mapInstances()
     {
-        $registry = Registry::getRegistryInstance();
+        $context = new MappingContext();
 
-        $registry->mapInstance("IAttributeDefFactory", "AttributeDefFactory", null, true);
-        $registry->mapInstance("IGenericFindService", "GenericFindService", array("IDbCommandExecutor"), true);
-        $registry->mapInstance("IAttributeDefModel", "AttributeDefModel", array("IGenericFindService"), true);
+        $context->mapInstance("IAttributeDefFactory", "AttributeDefFactory", null, true);
+        $context->mapInstance("IGenericFindService", "GenericFindService", array("IDbCommandExecutor"), true);
+        $context->mapInstance("IAttributeDefModel", "AttributeDefModel", array("IGenericFindService"), true);
+
+        $registry = Registry::getRegistryInstance();
+        $registry->addMappingContext($context);
     }
 
 }

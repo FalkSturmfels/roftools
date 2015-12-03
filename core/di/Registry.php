@@ -8,6 +8,7 @@
  */
 class Registry
 {
+
     private $classMap = array();
 
     private $constructorArgsMap = array();
@@ -16,45 +17,22 @@ class Registry
 
     private $instanceMap = array();
 
-    public function mapInstance($interfaceName, $className, $paramNames, $isSingleton)
-    {
-        if (!array_key_exists($interfaceName, $this->classMap))
-        {
-            $this->classMap[$interfaceName] = $className;
-
-            if (!empty($paramNames))
-            {
-                $this->constructorArgsMap[$interfaceName] = $paramNames;
-            }
-
-            if ($isSingleton)
-            {
-                array_push($this->singletonList, $interfaceName);
-            }
-        }
-    }
-
     public function getInstance($interfaceName)
     {
-        if (array_key_exists($interfaceName, $this->instanceMap))
-        {
+        if (array_key_exists($interfaceName, $this->instanceMap)) {
             return $this->instanceMap[$interfaceName];
-        }
-        else
-        {
+        } else {
             return $this->createInstance($interfaceName);
         }
     }
 
     private function createInstance($interfaceName)
     {
-        if (array_key_exists($interfaceName, $this->classMap))
-        {
+        if (array_key_exists($interfaceName, $this->classMap)) {
             $instance = $this->createNewInstance($interfaceName);
 
             $isSingleton = in_array($interfaceName, $this->singletonList);
-            if ($isSingleton)
-            {
+            if ($isSingleton) {
                 $this->instanceMap[$interfaceName] = $instance;
             }
             return $instance;
@@ -65,24 +43,19 @@ class Registry
     private function createNewInstance($interfaceName)
     {
         $className = $this->getClassName($interfaceName);
-        if ($className !== null)
-        {
+        if ($className !== null) {
             $paramNames = $this->getConstructorArgs($interfaceName);
 
-            if ($paramNames !== null)
-            {
+            if ($paramNames !== null) {
                 $params = array();
-                foreach ($paramNames as $name)
-                {
+                foreach ($paramNames as $name) {
                     $tmpParam = $this->getInstance($name);
                     array_push($params, $tmpParam);
                 }
 
                 $reflection = new ReflectionClass($className);
                 $instance = $reflection->newInstanceArgs($params);
-            }
-            else
-            {
+            } else {
                 $instance = new $className();
             }
             return $instance;
@@ -92,8 +65,7 @@ class Registry
 
     private function getClassName($interfaceName)
     {
-        if (array_key_exists($interfaceName, $this->classMap))
-        {
+        if (array_key_exists($interfaceName, $this->classMap)) {
             return $this->classMap[$interfaceName];
         }
         return null;
@@ -101,11 +73,26 @@ class Registry
 
     private function getConstructorArgs($interfaceName)
     {
-        if (array_key_exists($interfaceName, $this->constructorArgsMap))
-        {
+        if (array_key_exists($interfaceName, $this->constructorArgsMap)) {
             return $this->constructorArgsMap[$interfaceName];
         }
         return null;
+    }
+
+    public function addMappingContext(MappingContext $context)
+    {
+        $this->classMap = array_merge($this->classMap, $context->getClassMap());
+        $this->constructorArgsMap = array_merge($this->constructorArgsMap, $context->getConstructorArgsMap());
+        $this->instanceMap = array_merge($this->instanceMap, $context->getInstanceMap());
+        $this->singletonList = array_merge($this->singletonList, $context->getSingletonList());
+    }
+
+    public function clearRegistry()
+    {
+        $this->classMap = array();
+        $this->constructorArgsMap = array();
+        $this->instanceMap = array();
+        $this->singletonList = array();
     }
 
     // ============================================
@@ -118,8 +105,7 @@ class Registry
 
     static public function getRegistryInstance()
     {
-        if (null === self::$registry)
-        {
+        if (null === self::$registry) {
             self::$registry = new self;
         }
 
