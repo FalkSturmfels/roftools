@@ -7,7 +7,7 @@
  * Time: 23:16
  */
 
-class DbConnector
+class DbConnector implements IDbConnector
 {
 
     private $host;

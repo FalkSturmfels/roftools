@@ -25,7 +25,8 @@ class Bootstrap
     {
         $context = new MappingContext();
 
-        $context->mapInstance("IDbConnector", "DbConnector", null, true);
+        $context->mapInstance("IDbConnector", "DbConnectorMock", null, true);
+        //$context->mapInstance("IDbConnector", "DbConnector", null, true);
         $context->mapInstance("IDbCommandExecutor", "DbCommandExecutor", array("IDbConnector"), true);
         $context->mapInstance("IGetCommand", "GetCommand", null, false);
 

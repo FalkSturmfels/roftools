@@ -14,7 +14,7 @@ class DbCommandExecutor implements IDbCommandExecutor
      * DBCommandExecutor constructor.
      * @param $dbConnector
      */
-    public function __construct(DbConnector $dbConnector)
+    public function __construct(IDbConnector $dbConnector)
     {
         $this->dbConnector = $dbConnector;
     }
