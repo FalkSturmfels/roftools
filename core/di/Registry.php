@@ -107,6 +107,7 @@ class Registry
     {
         if (null === self::$registry) {
             self::$registry = new self;
+            self::$registry->instanceMap["Registry"] = self::$registry;
         }
 
         return self::$registry;

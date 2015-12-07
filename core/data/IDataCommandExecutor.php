@@ -6,7 +6,7 @@
  * Date: 13.11.2015
  * Time: 17:48
  */
-interface IDbCommandExecutor
+interface IDataCommandExecutor
 {
-    public function execQueryCommand(IDbCommand $command);
+    public function execGetRequest(IGetCommand $command);
 }

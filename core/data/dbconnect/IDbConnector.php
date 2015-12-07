@@ -8,5 +8,5 @@
  */
 interface IDbConnector
 {
-    public function executeQueryCommand(IDbCallbackHandler $callbackHandler, $query);
+    public function executeGetCommand(IGetCommand $command);
 }

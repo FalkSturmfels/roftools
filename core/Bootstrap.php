@@ -27,8 +27,8 @@ class Bootstrap
 
         $context->mapInstance("IDbConnector", "DbConnectorMock", null, true);
         //$context->mapInstance("IDbConnector", "DbConnector", null, true);
-        $context->mapInstance("IDbCommandExecutor", "DbCommandExecutor", array("IDbConnector"), true);
-        $context->mapInstance("IGetCommand", "GetCommand", array("IDbCommandExecutor"), false);
+        $context->mapInstance("IDataCommandExecutor", "DataCommandExecutor", array("IDbConnector"), true);
+        $context->mapInstance("IGetCommand", "GetCommand", array("IDataCommandExecutor"), false);
 
         $registry = Registry::getRegistryInstance();
         $registry->addMappingContext($context);
@@ -39,8 +39,10 @@ class Bootstrap
         $context = new MappingContext();
 
         $context->mapInstance("IAttributeDefFactory", "AttributeDefFactory", null, true);
-        $context->mapInstance("IGenericFindService", "GenericFindService", null, true);
-        $context->mapInstance("IAttributeDefModel", "AttributeDefModel", array("IGenericFindService"), true);
+        $context->mapInstance("IGenericFindService", "GenericFindService", array("Registry"), true);
+        $context->mapInstance("IAttributeDefModel", "AttributeDefModel", array("IAttributeDefService"), true);
+        $context->mapInstance("IAttributeDefService", "AttributeDefService",
+            array("IGenericFindService", "IAttributeDefFactory"), true);
 
         $registry = Registry::getRegistryInstance();
         $registry->addMappingContext($context);

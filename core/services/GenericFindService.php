@@ -9,24 +9,36 @@
 class GenericFindService
 {
 
+    private $registry;
+
     /**
-     * @param Callable $callable
-     * @param $entityName
-     * @param array $attributeNames
-     * @param string $propertyName
-     * @param array $propertyValues
+     * GenericFindService constructor.
+     * @param $registry
      */
-    public function findEntities(Callable $callable, $entityName, array $attributeNames = [],
-                               $propertyName = "", array $propertyValues = [])
+    public function __construct($registry)
+    {
+        $this->registry = $registry;
+    }
+
+
+    /**
+     *
+     * @param String $entityName
+     * @param Callable $successFunction
+     * @param array $attributeNames can be []
+     * @param String $propertyName can be ""
+     * @param array $propertyValues can be []
+     *
+     */
+    public function findEntities($entityName, CallbackFunction $successFunction, array $attributeNames = [],
+                                 $propertyName = "", array $propertyValues = [])
     {
         if (is_string($entityName)) {
 
-            $registry = Registry::getRegistryInstance();
-
-            $command = $registry.getInstance("IGetCommand");
-            $command->createGetQuery($entityName, $attributeNames, $propertyName, $propertyValues);
-            $command->setSuccessFunction($callable);
-
+            $command = $this->registry->getInstance("IGetCommand");
+            $command->createGetRequest($entityName, $attributeNames, $propertyName, $propertyValues);
+            $command->setSuccessFunction($successFunction);
+            $command->execute();
         }
         else{
             throw new InvalidArgumentException("EntityName must be a String");

@@ -6,33 +6,28 @@
  * Date: 13.11.2015
  * Time: 17:39
  */
-class AttributeDefModel implements IDbCallbackHandler
+class AttributeDefModel
 {
     private $attributeDefs;
 
+    private $attributeDefService;
+
     /**
      * AttributeDefModel constructor.
-     * @param GenericFindService $findService
+     * @param AttributeDefService $attributeDefService
      */
-    public function __construct(GenericFindService $findService)
+    public function __construct(AttributeDefService $attributeDefService)
     {
-        $findService->findEntities($this, (new AttributeDefDto())->getEntityName());
+        $this->attributeDefService = $attributeDefService;
+
+        $callback = new CallbackFunction($this, "setResult");
+
+        $this->attributeDefService->getAllAttributeDefs($callback);
     }
 
-    // ============================================
-    //
-    //   IDbCallbackHandler implementation
-    //
-    // ============================================
-
-    public function setResult(array $result){
-        $factory = new AttributeDefFactory();
-        $this->attributeDefs = $factory->createEntities($result);
-    }
-
-    public function setReturnValue($returnValue)
+    public function setResult(array $dtos)
     {
-        // Nothing to do
+        $this->attributeDefs = $dtos;
     }
 
     // ============================================
