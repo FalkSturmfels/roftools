@@ -10,7 +10,14 @@ class GetCommand implements IDbCommand
 {
     private $query;
 
-    private $callbackHandler;
+    private $dbCommandExecutor;
+
+    private $successFunction;
+
+    public function __construct(IDbCommandExecutor $dbCommandExecutor)
+    {
+        $this->dbCommandExecutor = $dbCommandExecutor;
+    }
 
     /**
      * Creates a get query
@@ -19,7 +26,7 @@ class GetCommand implements IDbCommand
      * @param string $propertyName
      * @param array $propertyValues
      */
-    public function createGetQuery($entityName, array $columns = [], $propertyName = "", array $propertyValues = [])
+    public function createGetRequest($entityName, array $columns = [], $propertyName = "", array $propertyValues = [])
     {
         if (is_string($entityName))
         {
@@ -105,17 +112,9 @@ class GetCommand implements IDbCommand
     /**
      * @inheritdoc
      */
-    public function setCallbackHandler(IDbCallbackHandler $handler)
+    public function setSuccessFunction(Callable $successFunction)
     {
-        $this->callbackHandler = $handler;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getCallbackHandler()
-    {
-        return $this->callbackHandler;
+        $this->successFunction = $successFunction;
     }
 
 

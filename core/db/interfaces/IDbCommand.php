@@ -6,20 +6,9 @@
  * Date: 12.11.2015
  * Time: 22:59
  */
-interface IDbCommand
+interface IGetCommand
 {
-    /**
-     * Returns the sql query
-     * @return void
-     */
-    public function getQuery();
+    public function createGetRequest($entityName, array $columns = [], $propertyName = "", array $propertyValues = []);
 
-    /**
-     * Sets the callback handler
-     * @param IDbCallbackHandler $handler
-     * @return void
-     */
-    public function setCallbackHandler(IDbCallbackHandler $handler);
-
-    public function getCallbackHandler();
+    public function setSuccessFunction(callable $successFunction);
 }
