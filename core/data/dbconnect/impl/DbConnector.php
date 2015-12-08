@@ -53,9 +53,9 @@ class DbConnector implements IDbConnector
     {
         $entityName = $command->getEntityName();
         $successFunction = $command->getSuccessFunction();
-        $columns = $command->getColumns();
-        $propertyName = $command->getPropertyName();
-        $propertyValues = $command->getPropertyName();
+        $columns = $command->getNeededProperties();
+        $propertyName = $command->getSelectorPropertyName();
+        $propertyValues = $command->getSelectorPropertyValues();
 
         if (is_string($entityName))
         {

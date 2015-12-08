@@ -8,39 +8,57 @@
  */
 class DbConfig
 {
-    public static $host;
+    private $host;
 
-    public static $dbName;
+    private $dbName;
 
-    public static $user;
+    private $user;
 
-    public static $pw;
+    private $pw;
 
     /**
      * @param $fileName
      */
-    public static function setConfigFile($fileName)
+    public function setConfigFile($fileName)
     {
         if ($dbConfig = parse_ini_file($fileName))
         {
-            self::$host = $dbConfig["host"];
-            self::$dbName = $dbConfig["dbName"];
-            self::$user = $dbConfig["user"];
-            self::$pw = $dbConfig["pw"];
+            $this->$host = $dbConfig["host"];
+            $this->$dbName = $dbConfig["dbName"];
+            $this->$user = $dbConfig["user"];
+            $this->$pw = $dbConfig["pw"];
         }
     }
 
     /**
-     * Singleton: private __construct
-     *            private __clone
+     * @return mixed
      */
-    private
-    function __construct()
+    public function getHost()
     {
+        return $this->host;
     }
 
-    private
-    function __clone()
+    /**
+     * @return mixed
+     */
+    public function getDbName()
     {
+        return $this->dbName;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPw()
+    {
+        return $this->pw;
     }
 }

@@ -8,19 +8,24 @@
  */
 class EntityTableMapper
 {
-    private static $entityTableMap = array(
-        "Attribute" => "attributes",
-        "AttributeDef" => "attribute_defs"
-    );
+    private $entityTableMap = array();
+
+    public function setEntityTable($file){
+
+        if ($dbConfig = parse_ini_file($fileName))
+        {
+
+        }
+    }
 
     /**
      * @inheritdoc
      */
-    public static function getTableNameByEntityName($entityName)
+    public function getTableNameByEntityName($entityName)
     {
         if (is_string($entityName)) {
-            if (array_key_exists($entityName, self::$entityTableMap)) {
-                return self::$entityTableMap[$entityName];
+            if (array_key_exists($entityName, $this->entityTableMap)) {
+                return $this->entityTableMap[$entityName];
             } else {
                 throw new Exception("EntityName isn't mapped to an table name");
             }

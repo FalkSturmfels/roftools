@@ -18,7 +18,7 @@ class Bootstrap
     private static function setConfig($baseDir)
     {
         $configPath = $baseDir . DIRECTORY_SEPARATOR . "main" . DIRECTORY_SEPARATOR . "config" . DIRECTORY_SEPARATOR;
-        DbConfig::setConfigFile($configPath . "config_db.ini");
+        DbConfig::setConfigFile($configPath . "db_config.ini");
     }
 
     private static function mapCoreInstances()

@@ -10,11 +10,11 @@ class GetCommand implements IGetCommand
 {
     private $entityName;
 
-    private $columns;
+    private $neededProperties;
 
-    private $propertyName;
+    private $selectorPropertyName;
 
-    private $propertyValues;
+    private $selectorPropertyValues;
 
     private $dataCommandExecutor;
 
@@ -34,16 +34,16 @@ class GetCommand implements IGetCommand
     /**
      * Creates a get query
      * @param $entityName
-     * @param array $columns
-     * @param string $propertyName
-     * @param array $propertyValues
+     * @param array $neededProperties
+     * @param string $selectorPropertyName
+     * @param array $selectorPropertyValues
      */
-    public function createGetRequest($entityName, array $columns = [], $propertyName = "", array $propertyValues = [])
+    public function createGetRequest($entityName, array $neededProperties = [], $selectorPropertyName = "", array $selectorPropertyValues = [])
     {
         $this->$entityName = $entityName;
-        $this->columns = $columns;
-        $this->propertyName = $propertyName;
-        $this->propertyValues = $propertyValues;
+        $this->neededProperties = $neededProperties;
+        $this->selectorPropertyName = $selectorPropertyName;
+        $this->selectorPropertyValues = $selectorPropertyValues;
     }
 
     /**
@@ -70,25 +70,25 @@ class GetCommand implements IGetCommand
     /**
      * @return mixed
      */
-    public function getColumns()
+    public function getNeededProperties()
     {
-        return $this->columns;
+        return $this->neededProperties;
     }
 
     /**
      * @return mixed
      */
-    public function getPropertyName()
+    public function getSelectorPropertyName()
     {
-        return $this->propertyName;
+        return $this->selectorPropertyName;
     }
 
     /**
      * @return mixed
      */
-    public function getPropertyValues()
+    public function getSelectorPropertyValues()
     {
-        return $this->propertyValues;
+        return $this->selectorPropertyValues;
     }
 
     /**

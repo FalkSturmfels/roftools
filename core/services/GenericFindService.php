@@ -24,7 +24,7 @@ class GenericFindService
     /**
      *
      * @param String $entityName
-     * @param Callable $successFunction
+     * @param CallbackFunction $successFunction
      * @param array $attributeNames can be []
      * @param String $propertyName can be ""
      * @param array $propertyValues can be []

@@ -28,17 +28,17 @@ interface IGetCommand
     /**
      * @return array
      */
-    public function getColumns();
+    public function getNeededProperties();
 
     /**
      * @return String
      */
-    public function getPropertyName();
+    public function getSelectorPropertyName();
 
     /**
      * @return array
      */
-    public function getPropertyValues();
+    public function getSelectorPropertyValues();
 
     /**
      * @return CallbackFunction
