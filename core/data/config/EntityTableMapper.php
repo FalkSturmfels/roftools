@@ -12,9 +12,11 @@ class EntityTableMapper
 
     public function setEntityTable($file){
 
-        if ($dbConfig = parse_ini_file($fileName))
+        if ($map = parse_ini_file($file))
         {
+            $entityTableMap = $map["entityTableMap"];
 
+            $this->entityTableMap = array_merge($this->entityTableMap, $entityTableMap);
         }
     }
 

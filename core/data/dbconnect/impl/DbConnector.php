@@ -19,15 +19,21 @@ class DbConnector implements IDbConnector
 
     private $pdo;
 
+    private $entityTableMapper;
+
     /**
-     * DbExecutor constructor.
+     * DbConnector constructor.
+     * @param DbConfig $dbConfig
+     * @param EntityTableMapper $entityTableMapper
      */
-    public function __construct()
+    public function __construct(DbConfig $dbConfig, EntityTableMapper $entityTableMapper)
     {
-        $this->host = DbConfig::$host;
-        $this->dbname = DbConfig::$dbName;
-        $this->pw = DbConfig::$pw;
-        $this->user = DbConfig::$user;
+        $this->host = $dbConfig->getHost();
+        $this->dbname = $dbConfig->getDbName();
+        $this->pw = $dbConfig->getPw();
+        $this->user = $dbConfig->getUser();
+
+        $this->$entityTableMapper = $entityTableMapper;
 
         try
         {
@@ -65,7 +71,7 @@ class DbConnector implements IDbConnector
 
             $query = $selectPart . $tableName . $wherePart;
 
-            if (is_callable($successFunction))
+            if ($successFunction instanceof CallbackFunction)
             {
                 $this->execQuery($query, $successFunction);
             }
@@ -129,7 +135,7 @@ class DbConnector implements IDbConnector
 
     private function createTableName($entityName)
     {
-        return EntityTableMapper::getTableNameByEntityName($entityName);
+        return $this->entityTableMapper->getTableNameByEntityName($entityName);
     }
 
     private function createWherePart($propertyName, array $propertyValues)

@@ -23,10 +23,10 @@ class DbConfig
     {
         if ($dbConfig = parse_ini_file($fileName))
         {
-            $this->$host = $dbConfig["host"];
-            $this->$dbName = $dbConfig["dbName"];
-            $this->$user = $dbConfig["user"];
-            $this->$pw = $dbConfig["pw"];
+            $this->host = $dbConfig["host"];
+            $this->dbName = $dbConfig["dbName"];
+            $this->user = $dbConfig["user"];
+            $this->pw = $dbConfig["pw"];
         }
     }
 
