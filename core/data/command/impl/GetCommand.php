@@ -40,7 +40,7 @@ class GetCommand implements IGetCommand
      */
     public function createGetRequest($entityName, array $neededProperties = [], $selectorPropertyName = "", array $selectorPropertyValues = [])
     {
-        $this->$entityName = $entityName;
+        $this->entityName = $entityName;
         $this->neededProperties = $neededProperties;
         $this->selectorPropertyName = $selectorPropertyName;
         $this->selectorPropertyValues = $selectorPropertyValues;

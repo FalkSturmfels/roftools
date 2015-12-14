@@ -33,7 +33,7 @@ class DbConnector implements IDbConnector
         $this->pw = $dbConfig->getPw();
         $this->user = $dbConfig->getUser();
 
-        $this->$entityTableMapper = $entityTableMapper;
+        $this->entityTableMapper = $entityTableMapper;
 
         try
         {

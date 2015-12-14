@@ -26,15 +26,15 @@ class Bootstrap
         $dbConfig->setConfigFile($dbConfigFile);
 
         $entityTableMapper = $registry->getInstance("IEntityTableMapper");
-        $entityTableConfigFile = $configPath."db_entity_table_map";
-        $entityTableMapper->setEntityTable($entityTableConfigFile);
+        $entityTableConfigFile = $configPath."db_entity_table_map.ini";
+        $entityTableMapper->setEntityTableMap($entityTableConfigFile);
     }
 
     private static function mapCoreInstances()
     {
         $context = new MappingContext();
 
-        //$context->mapInstance("IDbConnector", "DbConnectorMock", null, true);
+        //$context->mapInstance("IDbConnector", "DbConnectorMock", array("IDbConfig", "IEntityTableMapper"), true);
         $context->mapInstance("IDbConnector", "DbConnector", array("IDbConfig", "IEntityTableMapper") , true);
         $context->mapInstance("IDbConfig", "DbConfig", null , true);
         $context->mapInstance("IEntityTableMapper", "EntityTableMapper", null , true);

@@ -9,14 +9,23 @@
 class EntityTableMapper
 {
     private $entityTableMap = array();
+    private $propertyColumnMap = array();
 
-    public function setEntityTable($file){
-
-        if ($map = parse_ini_file($file))
-        {
+    public function setEntityTableMap($file)
+    {
+        if ($map = parse_ini_file($file, TRUE)) {
             $entityTableMap = $map["entityTableMap"];
 
             $this->entityTableMap = array_merge($this->entityTableMap, $entityTableMap);
+        }
+    }
+
+    public function setPropertyColumnMap($file)
+    {
+        if ($map = parse_ini_file($file, TRUE)) {
+            $propertyColumnMap = $map["propertyColumnMap"];
+
+            $this->entityTableMap = array_merge($this->propertyColumnMap, $propertyColumnMap);
         }
     }
 
