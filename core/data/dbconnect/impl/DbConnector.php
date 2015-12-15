@@ -59,15 +59,16 @@ class DbConnector implements IDbConnector
     {
         $entityName = $command->getEntityName();
         $successFunction = $command->getSuccessFunction();
-        $columns = $command->getNeededProperties();
+        $neededProperties = $command->getNeededProperties();
         $propertyName = $command->getSelectorPropertyName();
+
         $propertyValues = $command->getSelectorPropertyValues();
 
         if (is_string($entityName))
         {
-            $selectPart = $this->createSelectPart($columns);
+            $selectPart = $this->createSelectPart($entityName, $neededProperties);
             $tableName = $this->createTableName($entityName);
-            $wherePart = $this->createWherePart($propertyName, $propertyValues);
+            $wherePart = $this->createWherePart($entityName, $propertyName, $propertyValues);
 
             $query = $selectPart . $tableName . $wherePart;
 
@@ -110,19 +111,20 @@ class DbConnector implements IDbConnector
     //
     // ============================================
 
-    private function createSelectPart($columns)
+    private function createSelectPart($entityName, $neededProperties)
     {
         $selectPart = "SELECT * ";
 
-        if (!empty($columns))
+        if (!empty($neededProperties))
         {
             $selectPart = "SELECT ";
 
-            foreach ($columns as $column)
+            foreach ($neededProperties as $neededProperty)
             {
-                if (is_string($column))
+                if (is_string($neededProperty))
                 {
-                    $selectPart .= $column . ", ";
+                    $columnName = $this->createColumnName($entityName, $neededProperty);
+                    $selectPart .= $columnName . ", ";
                 }
             }
             $selectPart = substr($selectPart, 0, strlen($selectPart) - 2) . " ";
@@ -138,7 +140,12 @@ class DbConnector implements IDbConnector
         return $this->entityTableMapper->getTableNameByEntityName($entityName);
     }
 
-    private function createWherePart($propertyName, array $propertyValues)
+    private function createColumnName($entityName, $propertyName)
+    {
+        return $this->$this->entityTableMapper->getColumnNameByPropertyName($entityName, $propertyName);
+    }
+
+    private function createWherePart($entityName, $propertyName, array $propertyValues)
     {
         $wherePart = "";
 
@@ -146,12 +153,12 @@ class DbConnector implements IDbConnector
         {
             if (is_string($propertyName))
             {
-
+                $columnName = $this->createColumnName($entityName, $propertyName);
                 $wherePart .= " WHERE ";
 
                 foreach ($propertyValues as $propertyValue)
                 {
-                    $wherePart .= $propertyName . "= '" . $propertyValue . "' OR ";
+                    $wherePart .= $columnName . "= '" . $propertyValue . "' OR ";
                 }
                 $wherePart = substr($wherePart, 0, strlen($wherePart) - 4);
             }

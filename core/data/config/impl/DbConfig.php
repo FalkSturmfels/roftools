@@ -6,7 +6,7 @@
  * Date: 12.11.2015
  * Time: 21:50
  */
-class DbConfig
+class DbConfig implements IDbConfig
 {
     private $host;
 

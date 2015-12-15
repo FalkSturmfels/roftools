@@ -6,7 +6,7 @@
  * Date: 07.12.2015
  * Time: 21:11
  */
-class CallbackFunction
+class CallbackFunction implements ICallbackFunction
 {
     private $caller;
 

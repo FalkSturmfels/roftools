@@ -6,7 +6,7 @@
  * Date: 11.11.2015
  * Time: 22:58
  */
-class GenericFindService
+class GenericFindService implements IGenericFindService
 {
 
     private $registry;

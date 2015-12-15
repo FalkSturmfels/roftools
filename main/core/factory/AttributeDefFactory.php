@@ -6,7 +6,7 @@
  * Date: 13.11.2015
  * Time: 18:27
  */
-class AttributeDefFactory
+class AttributeDefFactory implements IAttributeDefFactory
 {
     public function createEntities(array $results)
     {
