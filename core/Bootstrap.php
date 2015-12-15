@@ -42,7 +42,6 @@ class Bootstrap
         $context->mapInstance("IGetCommand", "GetCommand", array("IDataCommandExecutor"), false);
         $context->mapInstance("IGenericFindService", "GenericFindService", array("Registry"), true);
 
-
         $registry = Registry::getRegistryInstance();
         $registry->addMappingContext($context);
     }

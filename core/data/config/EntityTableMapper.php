@@ -14,19 +14,18 @@ class EntityTableMapper
     public function setEntityTableMap($file)
     {
         if ($map = parse_ini_file($file, TRUE)) {
+
+            // Entity table map
             $entityTableMap = $map["entityTableMap"];
 
             $this->entityTableMap = array_merge($this->entityTableMap, $entityTableMap);
-        }
-    }
 
-    public function setPropertyColumnMap($file)
-    {
-        if ($map = parse_ini_file($file, TRUE)) {
+            // Property column map
             $propertyColumnMap = $map["propertyColumnMap"];
 
-            $this->entityTableMap = array_merge($this->propertyColumnMap, $propertyColumnMap);
+            $this->propertyColumnMap = array_merge($this->propertyColumnMap, $propertyColumnMap);
         }
+
     }
 
     /**
