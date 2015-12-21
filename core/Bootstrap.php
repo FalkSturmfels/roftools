@@ -34,8 +34,8 @@ class Bootstrap
     {
         $context = new MappingContext();
 
-        //$context->mapInstance("IDbConnector", "DbConnectorMock", array("IDbConfig", "IEntityTableMapper"), true);
-        $context->mapInstance("IDbConnector", "DbConnector", array("IDbConfig", "IEntityTableMapper") , true);
+        $context->mapInstance("IDbConnector", "DbConnectorMock", array("IDbConfig", "IEntityTableMapper"), true);
+        //$context->mapInstance("IDbConnector", "DbConnector", array("IDbConfig", "IEntityTableMapper") , true);
         $context->mapInstance("IDbConfig", "DbConfig", null , true);
         $context->mapInstance("IEntityTableMapper", "EntityTableMapper", null , true);
         $context->mapInstance("IDataCommandExecutor", "DataCommandExecutor", array("IDbConnector"), true);

@@ -11,7 +11,8 @@ class AttributeDefFactory implements IAttributeDefFactory
     public function createEntities(array $results)
     {
         $entities = array();
-        foreach ($results as $result) {
+        foreach ($results as $result)
+        {
             $entity = $this->createDto($result);
             array_push($entities, $entity);
         }
@@ -30,4 +31,6 @@ class AttributeDefFactory implements IAttributeDefFactory
 
         return $attributeDef;
     }
+
+
 }

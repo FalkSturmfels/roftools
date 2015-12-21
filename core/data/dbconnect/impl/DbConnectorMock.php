@@ -8,6 +8,10 @@
  */
 class DbConnectorMock implements IDbConnector
 {
+    public function __construct(DbConfig $dbConfig, EntityTableMapper $entityTableMapper)
+    {
+        // Nothing to do
+    }
 
     // ============================================
     //
