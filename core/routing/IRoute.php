@@ -6,12 +6,13 @@
  * Date: 21.12.2015
  * Time: 21:04
  */
-interface IRequest
+interface IRoute
 {
-
     public function getModule();
-    public function getController();
-    public function getAction();
-    public function getParams();
 
+    public function getController();
+
+    public function getAction();
+
+    public function getParams();
 }
