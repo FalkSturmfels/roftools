@@ -10,9 +10,9 @@ interface IModuleMapper
 {
     public function setModuleMap($file);
 
-    public function getModuleByName($moduleName);
+    public function getModuleNameByName($moduleName);
 
-    public function getControllerByName($controllerName);
+    public function getControllerNameByName($controllerName);
 
-    public function getActionByName($controllerName, $actionName);
+    public function getActionNameByName($controllerName, $actionName);
 }

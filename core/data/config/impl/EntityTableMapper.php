@@ -9,13 +9,13 @@
 class EntityTableMapper implements IEntityTableMapper
 {
     private $entityTableMap = array();
+
     private $propertyColumnMap = array();
 
     public function setEntityTableMap($file)
     {
         if ($map = parse_ini_file($file, TRUE))
         {
-
             // Entity table map
             $entityTableMap = $map["entityTableMap"];
 

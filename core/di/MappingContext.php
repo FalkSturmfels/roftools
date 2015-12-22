@@ -16,6 +16,14 @@ class MappingContext
 
     private $instanceMap = array();
 
+
+    /**
+     *
+     * @param String $interfaceName
+     * @param String $className
+     * @param Array $paramNames
+     * @param Boolean $isSingleton
+     */
     public function mapInstance($interfaceName, $className, $paramNames, $isSingleton)
     {
         if (!array_key_exists($interfaceName, $this->classMap)) {

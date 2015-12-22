@@ -10,8 +10,9 @@
 require_once "core/Autoloader.php";
 
 $baseDir = dirname(__FILE__);
+$rootDomain = "www.roft.de";
 Autoloader::register($baseDir);
-Bootstrap::boot($baseDir);
+Bootstrap::boot($baseDir, $rootDomain);
 
 $registry = Registry::getRegistryInstance();
 

@@ -8,5 +8,5 @@
  */
 interface IRouter
 {
-    public function createRoute();
+    public function getRoute($url);
 }

@@ -8,11 +8,9 @@
  */
 interface IRoute
 {
-    public function getModule();
+    public function getModuleName();
 
-    public function getController();
+    public function getControllerName();
 
-    public function getAction();
-
-    public function getParams();
+    public function getActionName();
 }
