@@ -22,18 +22,16 @@ class FrontController implements IFrontController
 
     public function dispatch($path)
     {
-        $parts = $this->extractModule($path);
+        $parts = preg_split("#/#", $path);
 
-        var_dump($parts);
-    }
+        if(sizeof($parts)>=3)
+        {
+            // extract module
+            $moduleName = $this->moduleMapper->getModuleNameByName($parts[0]);
+        }
+        else{
+            throw new Exception("url path must at least three parts, but has ".sizeof($parts));
+        }
 
-    /**
-     * @param String $path Example:
-     *  "/moduleName/controllerName/actionName/param1/param2"
-     * @return array
-     */
-    private function extractModule($path)
-    {
-        return preg_split("#/#", $path);
     }
 }
