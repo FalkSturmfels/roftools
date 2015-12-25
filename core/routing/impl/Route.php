@@ -8,24 +8,23 @@
  */
 class Route implements IRoute
 {
-
-    private $moduleName;
-
     private $controllerName;
 
     private $actionName;
 
+    private $params;
+
     /**
      * Route constructor.
-     * @param String $moduleName
      * @param String $controllerName
      * @param String $actionName
+     * @param array $params
      */
-    public function __construct($moduleName, $controllerName, $actionName)
+    public function __construct($controllerName, $actionName, $params)
     {
-        $this->moduleName = $moduleName;
         $this->controllerName = $controllerName;
         $this->actionName = $actionName;
+        $this->params = $params;
     }
 
     // ============================================
@@ -34,13 +33,6 @@ class Route implements IRoute
     //
     // ============================================
 
-    /**
-     * @return String
-     */
-    public function getModuleName()
-    {
-        return $this->moduleName;
-    }
 
     /**
      * @return String
@@ -58,4 +50,11 @@ class Route implements IRoute
         return $this->actionName;
     }
 
+    /**
+     * @return array
+     */
+    public function getParams()
+    {
+        return $this->params;
+    }
 }

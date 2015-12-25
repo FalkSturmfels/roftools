@@ -11,8 +11,4 @@ interface IModuleMapper
     public function setModuleMap($file);
 
     public function getModuleNameByName($moduleName);
-
-    public function getControllerNameByName($controllerName);
-
-    public function getActionNameByName($controllerName, $actionName);
 }

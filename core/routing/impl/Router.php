@@ -42,13 +42,13 @@ class Router implements IRouter
     //
     // ============================================
 
-    public function getRoute($url)
+    public function createRoute($url)
     {
-        $moduleName = "Admin";
         $controllerName = "Controller";
         $actionName = "Action";
+        $params = array();
 
-        $route = new Route($moduleName, $controllerName, $actionName);
+        $route = new Route($controllerName, $actionName, $params);
 
         return $route;
     }

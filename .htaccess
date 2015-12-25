@@ -1,2 +1,4 @@
 RewriteEngine on
-RewriteRule ^(.*)\.html$ $1.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ /roftools/index.php

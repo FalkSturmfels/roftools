@@ -8,5 +8,5 @@
  */
 interface IFrontController
 {
-    public function dispatch(IRoute $route);
+    public function dispatch($url);
 }
