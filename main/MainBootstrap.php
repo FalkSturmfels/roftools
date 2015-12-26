@@ -20,6 +20,7 @@ class MainBootstrap
         $context = self::mapModules($context);
         $context = self::mapControllers($context);
         $context = self::mapModels($context);
+        $context = self::mapViews($context);
         $context = self::mapServices($context);
         $context = self::mapFactories($context);
 
@@ -29,21 +30,23 @@ class MainBootstrap
 
     private static function mapModules(MappingContext $context)
     {
-        $context->mapInstance("AdminModule", "AdminModule", null, true);
+        $context->mapInstance("IAdminModule", "AdminModule", null, true);
 
         return $context;
     }
 
     private static function mapControllers(MappingContext $context)
     {
-        $context->mapInstance("AttributeDefController", "AttributeDefController", null, true);
+        $context->mapInstance("IAttributeDefController", "AttributeDefController",
+            array("IAttributeDefModel", "IAttributeDefView"), true);
 
         return $context;
     }
 
     private static function mapModels(MappingContext $context)
     {
-        $context->mapInstance("IAttributeDefModel", "AttributeDefModel", array("IAttributeDefService"), true);
+        $context->mapInstance("IAttributeDefModel", "AttributeDefModel",
+            array("IAttributeDefService"), true);
 
         return $context;
     }
@@ -59,6 +62,16 @@ class MainBootstrap
     private static function mapFactories(MappingContext $context)
     {
         $context->mapInstance("IAttributeDefFactory", "AttributeDefFactory", null, true);
+
+        return $context;
+    }
+
+    private static function mapViews(MappingContext $context)
+    {
+        $stdViewParams = array("ITemplateConverter");
+
+        $context->mapInstance("IAttributeDefView", "AttributeDefView",
+            $stdViewParams, true);
 
         return $context;
     }

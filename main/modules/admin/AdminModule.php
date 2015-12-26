@@ -14,8 +14,8 @@ class AdminModule extends ModuleBase
     public function __construct()
     {
         $this->contollerMap = array(
-            "attributedef" => "AttributeDefController",
-            "talentdef" => "TalentDefController"
+            "attributedef" => "IAttributeDefController",
+            "talentdef" => "ITalentDefController"
         );
 
         $this->actionMap = array(

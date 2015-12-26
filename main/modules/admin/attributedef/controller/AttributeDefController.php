@@ -8,6 +8,21 @@
  */
 class AttributeDefController
 {
+    private $model;
+
+    private $view;
+
+    /**
+     * AttributeDefController constructor.
+     * @param AttributeDefModel $attributeDefModel
+     * @param IView $view
+     */
+    public function __construct(AttributeDefModel $attributeDefModel, IView $view)
+    {
+        $this->model = $attributeDefModel;
+        $this->view = $view;
+    }
+
 
     public function addAttributeDef()
     {
