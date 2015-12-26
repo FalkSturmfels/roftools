@@ -23,7 +23,19 @@ class CallbackFunction implements ICallbackFunction
         $this->methodName = $methodName;
     }
 
-    public function getCallable()
+    public function executeCallback(array $params = null)
+    {
+        if (isset($params) && sizeof($params) > 0)
+        {
+            call_user_func_array($this->getCallable(), $params);
+        }
+        else
+        {
+            call_user_func($this->getCallable());
+        }
+    }
+
+    private function getCallable()
     {
         return array($this->caller, $this->methodName);
     }

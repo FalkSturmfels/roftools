@@ -22,16 +22,38 @@ class FrontController implements IFrontController
 
     public function dispatch($path)
     {
-        $parts = preg_split("#/#", $path);
+        $parts = preg_split("#/#", $path, -1, PREG_SPLIT_NO_EMPTY);
 
-        if(sizeof($parts)>=3)
+        $partsLength = sizeof($parts);
+        if ($partsLength >= 3)
         {
             // extract module
             $moduleName = $this->moduleMapper->getModuleNameByName($parts[0]);
-        }
-        else{
-            throw new Exception("url path must at least three parts, but has ".sizeof($parts));
-        }
 
+            if ($moduleName)
+            {
+                $registry = Registry::getRegistryInstance();
+
+                $module = $registry->getInstance($moduleName);
+                if ($module)
+                {
+                    $redirectToMainCallback = new CallbackFunction($this, "redirectToMain");
+
+                    $controllerParts = array_slice($parts, 1);
+
+                    $module->executeRequest($controllerParts, $redirectToMainCallback);
+                    return;
+                }
+            }
+        }
+        $this->redirectToMain();
+    }
+
+    /**
+     * Redirect to the main page
+     */
+    public function redirectToMain()
+    {
+        echo "Redirect to main";
     }
 }

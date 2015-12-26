@@ -8,11 +8,12 @@
 require_once "core/Autoloader.php";
 
 $baseDir = dirname(__FILE__);
-$rootDirectory = "/roftools/";
+
 Autoloader::register($baseDir);
-CoreBootstrap::boot($baseDir, $rootDirectory);
+CoreBootstrap::boot($baseDir);
 MainBootstrap::boot();
 
+$rootDirectory = "/roftools/";
 $path = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
 $path = str_replace($rootDirectory, "", $path);
 

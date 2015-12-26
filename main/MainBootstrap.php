@@ -17,12 +17,50 @@ class MainBootstrap
     {
         $context = new MappingContext();
 
-        $context->mapInstance("IAttributeDefFactory", "AttributeDefFactory", null, true);
-        $context->mapInstance("IAttributeDefModel", "AttributeDefModel", array("IAttributeDefService"), true);
-        $context->mapInstance("IAttributeDefService", "AttributeDefService",
-            array("IGenericFindService", "IAttributeDefFactory"), true);
+        $context = self::mapModules($context);
+        $context = self::mapControllers($context);
+        $context = self::mapModels($context);
+        $context = self::mapServices($context);
+        $context = self::mapFactories($context);
 
         $registry = Registry::getRegistryInstance();
         $registry->addMappingContext($context);
     }
+
+    private static function mapModules(MappingContext $context)
+    {
+        $context->mapInstance("AdminModule", "AdminModule", null, true);
+
+        return $context;
+    }
+
+    private static function mapControllers(MappingContext $context)
+    {
+        $context->mapInstance("AttributeDefController", "AttributeDefController", null, true);
+
+        return $context;
+    }
+
+    private static function mapModels(MappingContext $context)
+    {
+        $context->mapInstance("IAttributeDefModel", "AttributeDefModel", array("IAttributeDefService"), true);
+
+        return $context;
+    }
+
+    private static function mapServices(MappingContext $context)
+    {
+        $context->mapInstance("IAttributeDefService", "AttributeDefService",
+            array("IGenericFindService", "IAttributeDefFactory"), true);
+
+        return $context;
+    }
+
+    private static function mapFactories(MappingContext $context)
+    {
+        $context->mapInstance("IAttributeDefFactory", "AttributeDefFactory", null, true);
+
+        return $context;
+    }
+
 }

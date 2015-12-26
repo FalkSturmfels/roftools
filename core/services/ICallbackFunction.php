@@ -14,5 +14,5 @@
  */
 interface ICallbackFunction
 {
-    public function getCallable();
+    public function executeCallback(array $params = null);
 }

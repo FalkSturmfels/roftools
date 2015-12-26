@@ -10,15 +10,13 @@ class CoreBootstrap
 {
     private static $registry;
 
-    public static function boot($baseDir, $rootDomain)
+    public static function boot($baseDir)
     {
         self::$registry = $registry = Registry::getRegistryInstance();
 
         self::mapCoreInstances();
 
         self::setConfig($baseDir);
-
-        self::initRouter($rootDomain);
     }
 
     private static function mapCoreInstances()
@@ -33,7 +31,6 @@ class CoreBootstrap
         $context->mapInstance("IGetCommand", "GetCommand", array("IDataCommandExecutor"), false);
         $context->mapInstance("IGenericFindService", "GenericFindService", array("Registry"), true);
         $context->mapInstance("IModuleMapper", "ModuleMapper", null, true);
-        $context->mapInstance("IRouter", "Router", array("IModuleMapper"), true);
         $context->mapInstance("IFrontController", "FrontController", array("IModuleMapper"), true);
 
 
@@ -58,12 +55,5 @@ class CoreBootstrap
         $moduleMapper = self::$registry->getInstance("IModuleMapper");
         $moduleMapFile = $configPath . "module_map.ini";
         $moduleMapper->setModuleMap($moduleMapFile);
-    }
-
-    private static function initRouter($rootDomain)
-    {
-
-        $router = self::$registry->getInstance("IRouter");
-        $router->setRootDomain($rootDomain);
     }
 }

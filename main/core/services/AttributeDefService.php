@@ -39,6 +39,6 @@ class AttributeDefService
     {
         $dtos = $this->factory->createEntities($result);
 
-        call_user_func($this->callerSuccessFunction->getCallable(), $dtos);
+        $this->callerSuccessFunction->executeCallback(array($dtos));
     }
 }

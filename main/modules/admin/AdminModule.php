@@ -6,24 +6,29 @@
  * Date: 25.12.2015
  * Time: 11:18
  */
-class AdminModule implements IModule
+class AdminModule extends ModuleBase
 {
+    /**
+     * AdminModule constructor.
+     */
+    public function __construct()
+    {
+        $this->contollerMap = array(
+            "attributedef" => "AttributeDefController",
+            "talentdef" => "TalentDefController"
+        );
 
-    private $contollerMap = array(
-        "attributedef" => "AttributeDef",
-        "talentdef" => "TalentDef"
-    );
-
-    private $actionMap = array(
-        "AttributeDef" => array(
-            "addattributedef" => "addAttributeDef",
-            "removeattributedef" => "removeAttributeDef",
-            "showattributedefs" => "showAttributeDefs"
-        ),
-        "TalentDef" => array(
-            "addtalent" => "addTalent",
-            "removetalent" => "removeTalent",
-            "showtalents" => "showTalents"
-        )
-    );
+        $this->actionMap = array(
+            "AttributeDef" => array(
+                "addattributedef" => "addAttributeDef",
+                "removeattributedef" => "removeAttributeDef",
+                "showattributedefs" => "showAttributeDefs"
+            ),
+            "TalentDef" => array(
+                "addtalent" => "addTalent",
+                "removetalent" => "removeTalent",
+                "showtalents" => "showTalents"
+            )
+        );
+    }
 }

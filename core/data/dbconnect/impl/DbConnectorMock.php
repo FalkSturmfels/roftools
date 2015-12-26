@@ -25,7 +25,7 @@ class DbConnectorMock implements IDbConnector
         if ($successFunction instanceof CallbackFunction)
         {
             $result = $this->createResult();
-            call_user_func($successFunction->getCallable(), $result);
+            $successFunction->executeCallback(array($result));
         }
     }
 
