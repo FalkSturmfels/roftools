@@ -19,12 +19,12 @@ class AdminModule extends ModuleBase
         );
 
         $this->actionMap = array(
-            "AttributeDef" => array(
+            "attributedef" => [
                 "addattributedef" => "addAttributeDef",
                 "removeattributedef" => "removeAttributeDef",
-                "showattributedefs" => "showAttributeDefs"
-            ),
-            "TalentDef" => array(
+                "showattributedefs" => ["showAttributeDefs", 2]
+            ],
+            "talentdef" => array(
                 "addtalent" => "addTalent",
                 "removetalent" => "removeTalent",
                 "showtalents" => "showTalents"

@@ -100,7 +100,7 @@ class DbConnector implements IDbConnector
 
             if ($successFunction instanceof CallbackFunction)
             {
-                $successFunction->executeCallback(array($result));
+                $successFunction->executeCallback([$result]);
             }
         }
     }

@@ -19,7 +19,7 @@ abstract class ModuleBase
 
         if (sizeof($controllerParts) > 2)
         {
-            $params = $controllerParts[2];
+            $params = array_slice($controllerParts, 2);
         }
         else
         {
@@ -27,9 +27,12 @@ abstract class ModuleBase
         }
 
         $controllerName = $this->getControllerName($controllerPart);
-        $actionName = $this->getActionName($actionPart);
 
-        if ($controllerName !== "" && $actionName !== "")
+        $actionName = $this->getActionName($controllerPart, $actionPart);
+
+        $enoughParams = $this->hasEnoughParams($controllerPart, $actionPart, $params);
+
+        if ($controllerName !== "" && $actionName !== "" && $enoughParams)
         {
             $this->callActionInController($controllerName, $actionName, $params);
         }
@@ -66,15 +69,52 @@ abstract class ModuleBase
         }
     }
 
-    protected function getActionName($actionPart)
+    protected function getActionName($controllerPart, $actionPart)
     {
-        if (array_key_exists($actionPart, $this->actionMap))
+        $actionName = "";
+
+        $actionMapEntry = $this->getActionMapEntry($controllerPart, $actionPart);
+
+        if (is_string($actionMapEntry))
         {
-            return $this->actionMap[$actionPart];
+            $actionName = $actionMapEntry;
         }
-        else
+        else if (is_array($actionMapEntry) && sizeof($actionMapEntry) == 2)
         {
-            return "";
+            if (is_string($actionMapEntry[0]))
+            {
+                $actionName = $actionMapEntry[0];
+            }
         }
+
+        return $actionName;
+    }
+
+    private function hasEnoughParams($controllerPart, $actionPart, $params)
+    {
+        $requiredNumber = 0;
+        $actionMapEntry = $this->getActionMapEntry($controllerPart, $actionPart);
+
+
+        if (is_array($actionMapEntry) && sizeof($actionMapEntry) == 2)
+        {
+            $requiredNumber = $actionMapEntry[1];
+        }
+
+        return sizeof($params) == $requiredNumber;
+    }
+
+    private function getActionMapEntry($controllerPart, $actionPart)
+    {
+        if (array_key_exists($controllerPart, $this->actionMap))
+        {
+            $methodsMap = $this->actionMap[$controllerPart];
+            if (array_key_exists($actionPart, $methodsMap))
+            {
+                return $methodsMap[$actionPart];
+            }
+        }
+
+        return null;
     }
 }
