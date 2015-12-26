@@ -19,8 +19,8 @@ class AttributeDefController
 
     }
 
-    public function showAttributeDefs($id, $ident)
+    public function showAttributeDefs()
     {
-        echo "show all attribute defs now! id: ".$id." ident: ".$ident;
+        echo "show all attribute defs now!";
     }
 }

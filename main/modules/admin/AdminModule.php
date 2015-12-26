@@ -22,7 +22,7 @@ class AdminModule extends ModuleBase
             "attributedef" => [
                 "addattributedef" => "addAttributeDef",
                 "removeattributedef" => "removeAttributeDef",
-                "showattributedefs" => ["showAttributeDefs", 2]
+                "showattributedefs" => "showAttributeDefs",
             ],
             "talentdef" => array(
                 "addtalent" => "addTalent",
