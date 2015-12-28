@@ -11,7 +11,8 @@
  *
  * @author Achim
  */
-class TemplateResolver {
+class TemplateResolver
+{
 
     /**
      * Template directory
@@ -91,13 +92,16 @@ class TemplateResolver {
      */
     private $template = "";
 
-    public function __construct($tpl_dir = "", $lang_dir = "") {
+    public function __construct($tpl_dir = "", $lang_dir = "")
+    {
 
-        if (!empty($tpl_dir)) {
+        if (!empty($tpl_dir))
+        {
             $this->templateDir = $tpl_dir;
         }
 
-        if (!$lang_dir) {
+        if (!$lang_dir)
+        {
             $this->languageDir = $lang_dir;
         }
     }
@@ -113,34 +117,43 @@ class TemplateResolver {
      * @uses      parseFunctions()
      * @return    boolean
      */
-    public function load($fileName) {
+    public function load($fileName)
+    {
         $this->templateName = $fileName;
         $this->templateFile = $this->templateDir . $fileName;
 
-        if (!empty($this->templateFile)) {
-            if (file_exists($this->templateFile)) {
+        if (!empty($this->templateFile))
+        {
+            if (file_exists($this->templateFile))
+            {
                 $this->template = file_get_contents($this->templateFile);
-            } else {
+            }
+            else
+            {
                 return false;
             }
-        } else {
+        }
+        else
+        {
             return false;
         }
-        
+
         // Funktionen parsen
         $this->parseFunctions();
     }
-    
+
     /**
      * Einen Standard-Platzhalter ersetzen.
      */
-    public function assign($replace, $replacement) {
+    public function assign($replace, $replacement)
+    {
     }
-    
+
     /**
      * Includes parsen und Kommentare aus dem Template entfernen.
      */
-    private function parseFunctions() {
+    private function parseFunctions()
+    {
     }
 
     /**
@@ -149,7 +162,8 @@ class TemplateResolver {
      * @access    public
      * @uses      $template
      */
-    public function display() {
+    public function display()
+    {
         echo $this->template;
     }
 }

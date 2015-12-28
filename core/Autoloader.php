@@ -41,8 +41,8 @@ final class Autoloader
      * Checks if the given class exists in the path.
      * If it's exists, calls the according require_once function.
      *
-     * @param $path Path which should be checked.
-     * @param $className Name of the needed class.
+     * @param $path String Path which should be checked.
+     * @param $className String Name of the needed class.
      * @return bool True the class was found
      */
     private static function checkPath($path, $className)
@@ -64,7 +64,7 @@ final class Autoloader
      * If the class was found it returns true otherwise it search recursivly
      * the next sub directories.
      * @param $directory Directory in which the sub directories are.
-     * @param $className Name of the needed class.
+     * @param $className String Name of the needed class.
      * @return bool True if the class was found.
      */
     private static function checkSubDirectories($directory, $className)

@@ -36,6 +36,6 @@ class AttributeDefController
 
     public function showAttributeDefs()
     {
-        echo "show all attribute defs now!";
+        echo $this->view->showView();
     }
 }

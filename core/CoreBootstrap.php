@@ -33,6 +33,7 @@ class CoreBootstrap
         $context->mapInstance("IModuleMapper", "ModuleMapper", null, true);
         $context->mapInstance("IFrontController", "FrontController", array("IModuleMapper"), true);
         $context->mapInstance("ITemplateConverter", "TemplateConverter", null, true);
+        $context->mapInstance("IReplacementMap", "ReplacementMap", null, false);
 
         self::$registry->addMappingContext($context);
     }

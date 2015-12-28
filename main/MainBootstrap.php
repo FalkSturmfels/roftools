@@ -24,8 +24,11 @@ class MainBootstrap
         $context = self::mapServices($context);
         $context = self::mapFactories($context);
 
+
         $registry = Registry::getRegistryInstance();
         $registry->addMappingContext($context);
+
+        self::initTemplateConverter();
     }
 
     private static function mapModules(MappingContext $context)
@@ -68,7 +71,7 @@ class MainBootstrap
 
     private static function mapViews(MappingContext $context)
     {
-        $stdViewParams = array("ITemplateConverter");
+        $stdViewParams = array("ITemplateConverter", "IReplacementMap");
 
         $context->mapInstance("IAttributeDefView", "AttributeDefView",
             $stdViewParams, true);
@@ -76,4 +79,13 @@ class MainBootstrap
         return $context;
     }
 
+    private static function initTemplateConverter()
+    {
+        $registry = Registry::getRegistryInstance();
+        $converter = $registry->getInstance("ITemplateConverter");
+
+        $directory = dirname(__FILE__).DIRECTORY_SEPARATOR."templates";
+        $converter->setDefaultTemplateDir($directory);
+        $converter->setDefaultMainTemplate("mainTemplate.html");
+    }
 }
