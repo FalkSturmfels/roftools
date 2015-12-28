@@ -29,10 +29,12 @@ class AttributeDefView implements IView
     {
         $filePath = dirname(__FILE__).DIRECTORY_SEPARATOR."attributeDefViewTemplate.html";
         $this->replacementMap->createIncludeReplacement("content", $filePath);
+
+        $this->templateConverter->setReplacementMap($this->replacementMap);
     }
 
     public function showView()
     {
-        echo $this->templateConverter->convert();
+        $this->templateConverter->convert();
     }
 }

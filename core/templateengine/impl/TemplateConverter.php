@@ -17,6 +17,12 @@ class TemplateConverter implements ITemplateConverter
 
     private $replacementMap;
 
+    // ============================================
+    //
+    //   ITemplateConverter implementation
+    //
+    // ============================================
+
     public function setDefaultTemplateDir($directory)
     {
         $this->defaultTemplateDir = $directory;
@@ -51,8 +57,16 @@ class TemplateConverter implements ITemplateConverter
     {
         $template = $this->getCurrentMainTemplate();
 
+        $template = $this->replaceIncludes($template);
+
         echo $template;
     }
+
+    // ============================================
+    //
+    //   Get current template
+    //
+    // ============================================
 
     private function getCurrentMainTemplate()
     {
@@ -67,18 +81,61 @@ class TemplateConverter implements ITemplateConverter
 
         $this->currentMainTemplate = "";
 
-        $template = $this->getTemplate($templateFile);
+        $template = $this->getFileContent($templateFile);
 
         return $template;
     }
 
-    private function getTemplate($templateFile)
+    private function getFileContent($templateFile)
     {
         if (file_exists($templateFile))
         {
             return file_get_contents($templateFile);
-
         }
         return "";
+    }
+
+    // ============================================
+    //
+    //   Replace includes
+    //
+    // ============================================
+
+    private function replaceIncludes($template)
+    {
+        $includes = array();
+        preg_match_all("/{include:(.)*}/", $template, $includes);
+
+        if (!empty($includes) && !empty($includes[0]))
+        {
+            foreach ($includes[0] as $includeExp)
+            {
+                $include = trim($includeExp, "{}");
+
+                $includeSplit = preg_split("/:/", $include);
+
+                $variable = $includeSplit[1];
+
+                $template = $this->replaceInclude($template,$includeExp, $variable);
+            }
+
+            return $template;
+        }
+        else
+        {
+            return $template;
+        }
+    }
+
+    private function replaceInclude($template, $includeExp, $variableName)
+    {
+        $includeFilePath = $this->replacementMap
+            ->getIncludeReplacement($variableName);
+
+        $include = $this->getFileContent($includeFilePath);
+
+        $template = preg_replace("/" . $includeExp . "/", $include, $template);
+
+        return $this->replaceIncludes($template);
     }
 }
