@@ -49,18 +49,36 @@ class TemplateConverter implements ITemplateConverter
 
     public function convert()
     {
+        $template = $this->getCurrentMainTemplate();
 
+        echo $template;
+    }
+
+    private function getCurrentMainTemplate()
+    {
         if (!empty($this->currentMainTemplate))
         {
-            $template = $this->currentMainTemplate;
+            $templateFile = $this->currentMainTemplate;
         }
         else
         {
-            $template = $this->defaultMainTemplate;
+            $templateFile = $this->defaultMainTemplate;
         }
 
         $this->currentMainTemplate = "";
+
+        $template = $this->getTemplate($templateFile);
+
         return $template;
     }
 
+    private function getTemplate($templateFile)
+    {
+        if (file_exists($templateFile))
+        {
+            return file_get_contents($templateFile);
+
+        }
+        return "";
+    }
 }

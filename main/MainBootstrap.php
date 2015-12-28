@@ -84,7 +84,7 @@ class MainBootstrap
         $registry = Registry::getRegistryInstance();
         $converter = $registry->getInstance("ITemplateConverter");
 
-        $directory = dirname(__FILE__).DIRECTORY_SEPARATOR."templates";
+        $directory = dirname(__FILE__).DIRECTORY_SEPARATOR."template";
         $converter->setDefaultTemplateDir($directory);
         $converter->setDefaultMainTemplate("mainTemplate.html");
     }

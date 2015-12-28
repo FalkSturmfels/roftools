@@ -2,3 +2,4 @@ $ cat .gitignore
 *.iml
 config_db.ini
 .idea/
+main/resource
