@@ -32,6 +32,9 @@ class AttributeDefView implements IView
         $filePath = $directory."attributeDefViewTemplate.html";
         $this->replacementMap->createIncludeReplacement("content", $filePath);
 
+        $this->replacementMap->createValueReplacement("text", "Das ist ein Testtext");
+        $this->replacementMap->createValueReplacement("int", 13);
+
         $this->templateConverter->setReplacementMap($this->replacementMap);
     }
 

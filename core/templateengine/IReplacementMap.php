@@ -14,4 +14,11 @@ interface IReplacementMap
     public function getIncludeReplacement($variableName);
 
     public function hasIncludeEntry($variableName);
+
+
+    public function createValueReplacement($variableName, $value);
+
+    public function getValueReplacement($variableName);
+
+    public function hasValueEntry($variableName);
 }

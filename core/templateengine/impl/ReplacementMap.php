@@ -10,6 +10,7 @@ class ReplacementMap implements IReplacementMap
 {
     private $includeMap = array();
 
+    private $valueMap = array();
 
     public function createIncludeReplacement($variableName, $filePath)
     {
@@ -31,5 +32,28 @@ class ReplacementMap implements IReplacementMap
     public function hasIncludeEntry($variableName)
     {
         return array_key_exists($variableName, $this->includeMap);
+    }
+
+
+    public function createValueReplacement($variableName, $value)
+    {
+        $this->valueMap[$variableName] = $value;
+    }
+
+    public function getValueReplacement($variableName)
+    {
+        if (array_key_exists($variableName, $this->valueMap))
+        {
+            return $this->valueMap[$variableName];
+        }
+        else
+        {
+            throw new InvalidArgumentException("Include variable " . $variableName . " is not mapped");
+        }
+    }
+
+    public function hasValueEntry($variableName)
+    {
+        return array_key_exists($variableName, $this->valueMap);
     }
 }

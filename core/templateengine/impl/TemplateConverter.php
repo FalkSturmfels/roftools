@@ -70,6 +70,8 @@ class TemplateConverter implements ITemplateConverter
 
         $template = $this->replaceIncludes($template);
 
+        $template = $this->replaceValues($template);
+
         echo $template;
     }
 
@@ -167,5 +169,63 @@ class TemplateConverter implements ITemplateConverter
             throw new InvalidArgumentException("Variable name " . $variableName .
                 " is not mapped in any include replacement map.");
         }
+    }
+
+    // ============================================
+    //
+    //   Replace values / components
+    //
+    // ============================================
+
+    private function replaceValues($template)
+    {
+        $includes = array();
+        preg_match_all("/{value:(.)*}/", $template, $includes);
+
+        if (!empty($includes) && !empty($includes[0]))
+        {
+            foreach ($includes[0] as $includeExp)
+            {
+                $include = trim($includeExp, "{}");
+
+                $includeSplit = preg_split("/:/", $include);
+
+                $variable = $includeSplit[1];
+
+                $template = $this->replaceValue($template, $includeExp, $variable);
+            }
+
+        }
+        return $template;
+    }
+
+
+    private function replaceValue($template, $includeExp, $variableName)
+    {
+        $value = $this->getValueReplacement($variableName);
+
+
+        $template = preg_replace("/" . $includeExp . "/", $value, $template);
+
+        return $template;
+    }
+
+    private function getValueReplacement($variableName)
+    {
+        if ($this->replacementMap->hasValueEntry($variableName))
+        {
+            $value = $this->replacementMap->getValueReplacement($variableName);
+        }
+        else if ($this->defaultReplacementMap->hasValueEntry($variableName))
+        {
+            $value = $this->defaultReplacementMap->getValueReplacement($variableName);
+        }
+        else
+        {
+            throw new InvalidArgumentException("Variable name " . $variableName .
+                " is not mapped in any include replacement map.");
+        }
+
+        return $value."";
     }
 }
