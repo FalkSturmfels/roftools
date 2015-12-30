@@ -32,8 +32,10 @@ class CoreBootstrap
         $context->mapInstance("IGenericFindService", "GenericFindService", array("Registry"), true);
         $context->mapInstance("IModuleMapper", "ModuleMapper", null, true);
         $context->mapInstance("IFrontController", "FrontController", array("IModuleMapper"), true);
-        $context->mapInstance("ITemplateConverter", "TemplateConverter", null, true);
         $context->mapInstance("IReplacementMap", "ReplacementMap", null, false);
+        $context->mapInstance("IDefaultReplacementMap", "ReplacementMap", null, true);
+        $context->mapInstance("ITemplateConverter", "TemplateConverter", array("IDefaultReplacementMap"), true);
+
 
         self::$registry->addMappingContext($context);
     }

@@ -12,4 +12,6 @@ interface IReplacementMap
     public function createIncludeReplacement($variableName, $filePath);
 
     public function getIncludeReplacement($variableName);
+
+    public function hasIncludeEntry($variableName);
 }

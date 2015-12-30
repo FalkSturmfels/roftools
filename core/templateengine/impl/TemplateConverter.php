@@ -17,6 +17,17 @@ class TemplateConverter implements ITemplateConverter
 
     private $replacementMap;
 
+    private $defaultReplacementMap;
+
+    /**
+     * TemplateConverter constructor.
+     * @param $defaultReplacementMap IReplacementMap
+     */
+    public function __construct(IReplacementMap $defaultReplacementMap)
+    {
+        $this->defaultReplacementMap = $defaultReplacementMap;
+    }
+
     // ============================================
     //
     //   ITemplateConverter implementation
@@ -92,7 +103,10 @@ class TemplateConverter implements ITemplateConverter
         {
             return file_get_contents($templateFile);
         }
-        return "";
+        else
+        {
+            throw new Exception("File: " . $templateFile . " doesn't exists");
+        }
     }
 
     // ============================================
@@ -116,10 +130,10 @@ class TemplateConverter implements ITemplateConverter
 
                 $variable = $includeSplit[1];
 
-                $template = $this->replaceInclude($template,$includeExp, $variable);
+                $template = $this->replaceInclude($template, $includeExp, $variable);
             }
 
-            return $template;
+            return $this->replaceIncludes($template);
         }
         else
         {
@@ -129,13 +143,29 @@ class TemplateConverter implements ITemplateConverter
 
     private function replaceInclude($template, $includeExp, $variableName)
     {
-        $includeFilePath = $this->replacementMap
-            ->getIncludeReplacement($variableName);
+        $includeFilePath = $this->getIncludeReplacement($variableName);
 
         $include = $this->getFileContent($includeFilePath);
 
         $template = preg_replace("/" . $includeExp . "/", $include, $template);
 
-        return $this->replaceIncludes($template);
+        return $template;
+    }
+
+    private function getIncludeReplacement($variableName)
+    {
+        if ($this->replacementMap->hasIncludeEntry($variableName))
+        {
+            return $this->replacementMap->getIncludeReplacement($variableName);
+        }
+        else if ($this->defaultReplacementMap->hasIncludeEntry($variableName))
+        {
+            return $this->defaultReplacementMap->getIncludeReplacement($variableName);
+        }
+        else
+        {
+            throw new InvalidArgumentException("Variable name " . $variableName .
+                " is not mapped in any include replacement map.");
+        }
     }
 }

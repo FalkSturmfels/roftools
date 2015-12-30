@@ -84,8 +84,19 @@ class MainBootstrap
         $registry = Registry::getRegistryInstance();
         $converter = $registry->getInstance("ITemplateConverter");
 
-        $directory = dirname(__FILE__).DIRECTORY_SEPARATOR."template";
+        $directory = dirname(__FILE__) . DIRECTORY_SEPARATOR . "template";
         $converter->setDefaultTemplateDir($directory);
         $converter->setDefaultMainTemplate("mainTemplate.html");
+
+        self::initDefaultReplacementMap($directory);
+    }
+
+    private static function initDefaultReplacementMap($directory)
+    {
+        $registry = Registry::getRegistryInstance();
+        $defaultReplacementMap = $registry->getInstance("IDefaultReplacementMap");
+
+        $footerFilePath = $directory . DIRECTORY_SEPARATOR . "footerTemplate.html";
+        $defaultReplacementMap->createIncludeReplacement("footer", $footerFilePath);
     }
 }

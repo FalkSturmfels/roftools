@@ -10,6 +10,7 @@ class ReplacementMap implements IReplacementMap
 {
     private $includeMap = array();
 
+
     public function createIncludeReplacement($variableName, $filePath)
     {
         $this->includeMap[$variableName] = $filePath;
@@ -17,7 +18,7 @@ class ReplacementMap implements IReplacementMap
 
     public function getIncludeReplacement($variableName)
     {
-        if (array_key_exists($variableName,$this->includeMap))
+        if (array_key_exists($variableName, $this->includeMap))
         {
             return $this->includeMap[$variableName];
         }
@@ -27,4 +28,8 @@ class ReplacementMap implements IReplacementMap
         }
     }
 
+    public function hasIncludeEntry($variableName)
+    {
+        return array_key_exists($variableName, $this->includeMap);
+    }
 }
