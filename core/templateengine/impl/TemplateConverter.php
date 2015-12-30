@@ -226,6 +226,11 @@ class TemplateConverter implements ITemplateConverter
                 " is not mapped in any include replacement map.");
         }
 
-        return $value."";
+        if ($value instanceof IComponent)
+        {
+            $value = $value->getValue();
+        }
+
+        return $value . "";
     }
 }

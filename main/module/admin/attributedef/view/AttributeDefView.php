@@ -35,6 +35,8 @@ class AttributeDefView implements IView
         $this->replacementMap->createValueReplacement("text", "Das ist ein Testtext");
         $this->replacementMap->createValueReplacement("int", 13);
 
+        $this->replacementMap->createValueReplacement("simpleComponent", new SimpleComponent());
+
         $this->templateConverter->setReplacementMap($this->replacementMap);
     }
 
