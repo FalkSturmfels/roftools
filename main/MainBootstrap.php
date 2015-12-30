@@ -93,10 +93,6 @@ class MainBootstrap
 
     private static function initDefaultReplacementMap($directory)
     {
-        $registry = Registry::getRegistryInstance();
-        $defaultReplacementMap = $registry->getInstance("IDefaultReplacementMap");
-
-        $footerFilePath = $directory . DIRECTORY_SEPARATOR . "footerTemplate.html";
-        $defaultReplacementMap->createIncludeReplacement("footer", $footerFilePath);
+        // no default replacements yet
     }
 }

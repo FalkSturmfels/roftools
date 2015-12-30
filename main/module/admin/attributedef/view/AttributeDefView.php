@@ -12,6 +12,21 @@ class AttributeDefView implements IView
 
     private $replacementMap;
 
+    private $contentData;
+
+    // ============================================
+    //
+    //   Content data keys
+    //
+    // ============================================
+
+    const DATA_ATTRIBUTE_DEF_HEADLINE = "attributeDefHeadline";
+
+    const DATA_ATTRIBUTE_DEF_HEAD_ROW = "attributeDefHeadRow";
+
+    const DATA_ATTRIBUTE_DEF_ROWS = "attributeDefRows";
+
+
     /**
      * AttributeDefView constructor.
      * @param ITemplateConverter ITemplateConverter $templateConverter
@@ -22,26 +37,58 @@ class AttributeDefView implements IView
     {
         $this->templateConverter = $templateConverter;
         $this->replacementMap = $replacementMap;
-
-        $this->initView();
     }
 
     private function initView()
     {
-        $directory = dirname(__FILE__).DIRECTORY_SEPARATOR;
-        $filePath = $directory."attributeDefViewTemplate.html";
-        $this->replacementMap->createIncludeReplacement("content", $filePath);
+        $this->initIncludeReplacements();
 
-        $this->replacementMap->createValueReplacement("text", "Das ist ein Testtext");
-        $this->replacementMap->createValueReplacement("int", 13);
-
-        $this->replacementMap->createValueReplacement("simpleComponent", new SimpleComponent());
+        $this->initTableReplacement();
 
         $this->templateConverter->setReplacementMap($this->replacementMap);
     }
 
+    private function initIncludeReplacements()
+    {
+        $directory = dirname(__FILE__) . DIRECTORY_SEPARATOR;
+        $filePath = $directory . "attributeDefViewTemplate.html";
+        $this->replacementMap->createIncludeReplacement("content", $filePath);
+    }
+
+    private function initTableReplacement()
+    {
+        $table = new TableComponent();
+
+        $headline = $this->contentData[AttributeDefView::DATA_ATTRIBUTE_DEF_HEADLINE];
+        $headRow = $this->contentData[AttributeDefView::DATA_ATTRIBUTE_DEF_HEAD_ROW];
+        $contentRows = $this->contentData[AttributeDefView::DATA_ATTRIBUTE_DEF_ROWS];
+
+        $table->setHeadline($headline);
+        $table->setHeadRow($headRow);
+        $table->setContentRows($contentRows);
+
+        $this->replacementMap->createValueReplacement("table", $table);
+    }
+
+    // ============================================
+    //
+    //   IView implementation
+    //
+    // ============================================
+
+    /**
+     * @param array $contentData
+     */
+    public function setContentData(array $contentData)
+    {
+        $this->contentData = $contentData;
+    }
+
+
     public function showView()
     {
-        $this->templateConverter->convert();
+        $this->initView();
+
+        echo $this->templateConverter->convert();
     }
 }

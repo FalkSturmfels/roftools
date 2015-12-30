@@ -8,5 +8,10 @@
  */
 interface IView
 {
+    /**
+     * @param array $contentData
+     */
+    public function setContentData(array $contentData);
+
     public function showView();
 }

@@ -72,7 +72,7 @@ class TemplateConverter implements ITemplateConverter
 
         $template = $this->replaceValues($template);
 
-        echo $template;
+       return $template;
     }
 
     // ============================================
