@@ -8,9 +8,7 @@
  */
 class AttributeDefView implements IView
 {
-    private $templateConverter;
-
-    private $replacementMap;
+    private $templateRegistry;
 
     private $contentData;
 
@@ -29,45 +27,22 @@ class AttributeDefView implements IView
 
     /**
      * AttributeDefView constructor.
-     * @param ITemplateConverter ITemplateConverter $templateConverter
-     * @param IReplacementMap IReplacementMap $replacementMap
+     * @param ITemplateRegistry $templateRegistry
      */
-    public function __construct(ITemplateConverter $templateConverter,
-                                IReplacementMap $replacementMap)
+    public function __construct(ITemplateRegistry $templateRegistry)
     {
-        $this->templateConverter = $templateConverter;
-        $this->replacementMap = $replacementMap;
+        $this->templateRegistry = $templateRegistry;
     }
 
     private function initView()
     {
-        $this->initIncludeReplacements();
+        $template = $this->templateRegistry->getTemplate("attributeDefTable");
 
-        $this->initTableReplacement();
-
-        $this->templateConverter->setReplacementMap($this->replacementMap);
-    }
-
-    private function initIncludeReplacements()
-    {
-        $directory = dirname(__FILE__) . DIRECTORY_SEPARATOR;
-        $filePath = $directory . "attributeDefViewTemplate.html";
-        $this->replacementMap->createIncludeReplacement("content", $filePath);
-    }
-
-    private function initTableReplacement()
-    {
-        $table = new TableComponent();
-
-        $headline = $this->contentData[AttributeDefView::DATA_ATTRIBUTE_DEF_HEADLINE];
-        $headRow = $this->contentData[AttributeDefView::DATA_ATTRIBUTE_DEF_HEAD_ROW];
-        $contentRows = $this->contentData[AttributeDefView::DATA_ATTRIBUTE_DEF_ROWS];
-
-        $table->setHeadline($headline);
-        $table->setHeadRow($headRow);
-        $table->setContentRows($contentRows);
-
-        $this->replacementMap->createValueReplacement("table", $table);
+        if ($template === null)
+        {
+            $templateDir = dirname(__FILE__);
+            $this->templateRegistry->createTemplateEntry("attributeDefTable", $templateDir, "attributeDefTable.tpl.html");
+        }
     }
 
     // ============================================
@@ -89,6 +64,6 @@ class AttributeDefView implements IView
     {
         $this->initView();
 
-        echo $this->templateConverter->convert();
+
     }
 }

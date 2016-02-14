@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Template</title>
+        <title>{value:Title}</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="/roftools/main/css/main.css"/>
@@ -9,8 +9,11 @@
     </head>
     <body>
 
-        <header> <h1>Main Page</h1></header>
+        <header> <h1>{value:PageTitle}</h1></header>
+
+        {include:mainNavigation}
 
         {include:content}
+
     </body>
 </html>

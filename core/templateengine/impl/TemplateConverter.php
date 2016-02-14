@@ -21,9 +21,9 @@ class TemplateConverter implements ITemplateConverter
 
     /**
      * TemplateConverter constructor.
-     * @param $defaultReplacementMap IReplacementMap
+     *
      */
-    public function __construct(IReplacementMap $defaultReplacementMap)
+    public function __construct()
     {
         $this->defaultReplacementMap = $defaultReplacementMap;
     }
@@ -233,4 +233,12 @@ class TemplateConverter implements ITemplateConverter
 
         return $value . "";
     }
+
+    // ============================================
+    //
+    //   For expression handling
+    //
+    // ============================================
+
+
 }

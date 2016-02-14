@@ -8,9 +8,14 @@
  */
 class MainBootstrap
 {
-    public static function boot()
+    /**
+     * @param String $stdTemplateDir
+     */
+    public static function boot($stdTemplateDir)
     {
         self::mapInstances();
+
+        self::initTemplateRegistry($stdTemplateDir);
     }
 
     private static function mapInstances()
@@ -27,8 +32,6 @@ class MainBootstrap
 
         $registry = Registry::getRegistryInstance();
         $registry->addMappingContext($context);
-
-        self::initTemplateConverter();
     }
 
     private static function mapModules(MappingContext $context)
@@ -71,28 +74,21 @@ class MainBootstrap
 
     private static function mapViews(MappingContext $context)
     {
-        $stdViewParams = array("ITemplateConverter", "IReplacementMap");
+        $stdViewParams = array("Registry", "ITemplateConverter", "ITemplateRegistry");
 
-        $context->mapInstance("IAttributeDefView", "AttributeDefView",
-            $stdViewParams, true);
+        /*$context->mapInstance("IAttributeDefView", "AttributeDefView",
+            $stdViewParams, true);*/
 
         return $context;
     }
 
-    private static function initTemplateConverter()
+    private static function initTemplateRegistry($stdTemplateDir)
     {
         $registry = Registry::getRegistryInstance();
-        $converter = $registry->getInstance("ITemplateConverter");
 
-        $directory = dirname(__FILE__) . DIRECTORY_SEPARATOR . "template";
-        $converter->setDefaultTemplateDir($directory);
-        $converter->setDefaultMainTemplate("mainTemplate.html");
+        $templateRegistry = $registry->getInstance("ITemplateRegistry");
 
-        self::initDefaultReplacementMap($directory);
-    }
-
-    private static function initDefaultReplacementMap($directory)
-    {
-        // no default replacements yet
+        $templateRegistry->createTemplateEntry("main", $stdTemplateDir, "main.tpl.html");
+        $templateRegistry->createTemplateEntry("mainNavigation", $stdTemplateDir, "mainNavigation.tpl.html");
     }
 }
